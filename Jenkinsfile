@@ -1,20 +1,15 @@
 pipeline {
-    agent {
-        docker {
-            image 'docker:latest'
-            args '--privileged -v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
+    agent any
 
     stages {
         stage('Verify Branch') {
             steps {
-                echo "$GIT_BRANCH"
+                echo '$GIT_BRANCH'
             }
         }
         stage('Docker Build') {
             steps {
-                sh 'docker compose build'
+                sh(script: 'docker compose build')
             }
         }
     }
