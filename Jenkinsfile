@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'docker:latest'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
 
     stages {
         stage('Verify Environment') {
@@ -8,6 +13,7 @@ pipeline {
                 sh 'echo $PATH'
                 sh 'which docker'
                 sh 'docker --version'
+                sh 'docker-compose --version'
             }
         }
         stage('Verify Branch') {
