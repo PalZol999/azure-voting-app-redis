@@ -1,8 +1,8 @@
 pipeline {
     agent {
         docker {
-            image 'docker:19.03.12' // Ensure this image has both Docker and Docker Compose
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
+            image 'docker:20.10.7' // Using a Docker image that includes Docker
+            args '-v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workspace'
         }
     }
 
@@ -14,7 +14,8 @@ pipeline {
         }
         stage('Docker Build') {
             steps {
-                sh 'docker-compose version' // Verify docker-compose is available
+                sh 'docker --version' // Verify Docker is available
+                sh 'docker-compose --version' // Verify Docker Compose is available
                 sh 'docker-compose build'
             }
         }
